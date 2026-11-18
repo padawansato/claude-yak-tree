@@ -1,0 +1,13 @@
+{
+  "name": "claude-yak-tree",
+  "owner": {
+    "name": "padawansato"
+  },
+  "description": "A Claude Code mod that keeps a tree of what you are working on in a side pane",
+  "plugins": [
+    {
+      "name": "yak-tree",
+      "source": "./"
+    }
+  ]
+}

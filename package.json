@@ -1,0 +1,10 @@
+{
+  "name": "claude-yak-tree",
+  "version": "0.4.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/unit/tree.spec.ts tests/unit/view.spec.ts tests/unit/scope.spec.ts tests/unit/i18n.spec.ts tests/unit/config.spec.ts tests/unit/hash.spec.ts tests/unit/views.spec.ts tests/unit/poll.spec.ts"
+  }
+}

@@ -1,0 +1,9 @@
+ref/
+logs/
+.env
+.env.*
+*.log
+latest
+.handoff/
+.claude-plugin/types/
+.voicevox-player-cache/

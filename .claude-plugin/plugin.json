@@ -1,0 +1,39 @@
+{
+  "name": "yak-tree",
+  "displayName": "yak-tree",
+  "version": "0.4.0",
+  "description": "A Claude Code mod that keeps a tree of what you are working on in a side pane, using done / here / important marks",
+  "author": { "name": "padawansato" },
+  "homepage": "https://github.com/padawansato/claude-yak-tree",
+  "repository": "https://github.com/padawansato/claude-yak-tree",
+  "license": "MIT",
+  "keywords": ["mod", "yak-tree", "tree", "notes", "pane", "sidebar", "workflow"],
+  "userConfig": {
+    "issueKeyPattern": {
+      "type": "string",
+      "title": "Issue key pattern",
+      "description": "Regular expression that pulls an issue key out of the git branch name, such as ^([A-Z][A-Z0-9]*-[0-9]+)(/|$). A branch that matches gets one tree per issue. Leave empty to use one tree per branch."
+    },
+    "language": {
+      "type": "string",
+      "title": "Language",
+      "description": "Language of the text yak-tree shows: the pane heading and the error messages of its tools.",
+      "options": ["en", "ja"],
+      "default": "en"
+    },
+    "view": {
+      "type": "string",
+      "title": "View",
+      "description": "How the pane draws the tree: e is an outline, a is a git-graph style. /tree e or /tree a changes it and is remembered across sessions; the remembered choice wins over this setting.",
+      "options": ["e", "a"],
+      "default": "e"
+    },
+    "warnAfterToolCalls": {
+      "type": "number",
+      "title": "Warn after this many tool calls",
+      "description": "(Not implemented yet.) When a turn runs this many tool calls without updating the tree, a one-line warning appears under the answer.",
+      "min": 1,
+      "default": 3
+    }
+  }
+}

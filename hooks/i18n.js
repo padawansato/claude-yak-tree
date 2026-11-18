@@ -1,0 +1,118 @@
+// 人に見える文字列（Pane の見出し、警告、エラー、注意）を 1 か所にまとめる。
+// 英語が既定。userConfig の language が "ja" のときだけ日本語。
+// ツールの description（Claude が読むもの）はここに置かず、英語だけで register.js に書く。
+
+export const MESSAGES = {
+  en: {
+    'cmd.description': 'Toggle the yak-tree pane',
+    'pane.sampleHeading': 'sample tree (no tree file yet)',
+    'pane.treeHeading': 'tree: {label}',
+    'scope.session': 'this session',
+    'pane.omitted': ' (+{n} rows omitted)',
+    'pane.noHere': 'no here',
+    'pane.important': '★{n}',
+    'pane.open': 'open {n}',
+    'pane.mode': 'mode: {mode}  (/{command} e|a)',
+    'pane.unknownView': "unknown view '{value}'; use /{command} e or /{command} a",
+    'view.here': 'here',
+    // P0 のサンプルツリーの本文（構造と id は views.js の sampleTree）
+    'sample.1': "Find the house key",
+    'sample.2': "The usual hook. Not there",
+    'sample.3': "Pockets of yesterday's coat. Not there",
+    'sample.4': "Found last week's receipt. Put it in the household book later",
+    'sample.5': "Empty the bag and go through everything",
+    'sample.6': "Outer pocket. Not there",
+    'sample.7': "The zipped inner pocket",
+    'sample.8': "Did I even use this bag yesterday?",
+    'sample.9': "Call the shop I stopped by yesterday",
+    'sample.10': "Check the car (I didn't drive yesterday)",
+    'sample.11': "Go out with the spare key and keep looking after I get back",
+    'warn.noTreeUpdate': 'yak-tree: {n} tool calls this turn, but the tree was not updated (tree_add / tree_here)',
+    'note.ancestorOfHere': 'note: {id} is an ancestor of here; here stays at {here}',
+    'err.notFound': 'id {id} is not in the tree; call tree_read to see the current ids',
+    'err.emptyText': 'text must not be empty',
+    'err.textNotString': 'text must be a string',
+    'err.badHere': 'here must be true or false',
+    'err.isLink': 'the tree file is a symbolic link ({path}); yak-tree does not write through links',
+    'err.singleLine': 'text must be a single line',
+    'err.startsWithMark': 'text must not start with a mark such as __done__; use tree_mark',
+    'err.containsComment': 'text must not contain an HTML comment (<!-- ... -->)',
+    'err.badMark': 'mark must be one of {marks}',
+    'err.badCloseMark': 'mark must be done or abandoned',
+    'err.importantHere': 'the here node cannot be important; move here with tree_here first',
+    'err.notHere': 'node {id} is not here',
+    'err.markedNode': "node {id} is marked {mark}; clear it with tree_mark(id, 'none') first, or pick another node",
+    'err.badName': "a tree name may use only letters, digits, '-', '_' and '.', must start with a letter or digit, and must not contain '..' or path separators (got {value})",
+    'err.unsafeSegment': 'unsafe {what} for a path segment: {value}',
+    'err.subagent': 'tree writes are for the main conversation only; put the change you want in your final report and the main conversation will record it',
+    'err.missingId': 'id is required; call tree_read to see the current ids',
+    'err.badParent': 'parent_id must be the id of a node; call tree_read to see the current ids',
+    'err.conflict': 'the tree file kept changing while it was being written ({path}); call tree_read and try again',
+    'err.tooLarge': 'the tree file is over 4 MiB ({path}); a person has to split it',
+    'err.io': 'could not read or write {path}: {detail}',
+    'tool.noFile': '(no tree file yet; tree_add creates it)',
+    'tool.issues': 'issues: {n} (missing or duplicate ids, or more than one here, were repaired)',
+  },
+  ja: {
+    'cmd.description': 'yak-tree の Pane を開閉する',
+    'pane.sampleHeading': 'サンプルのツリー（ツリーのファイルはまだない）',
+    'pane.treeHeading': 'ツリー: {label}',
+    'scope.session': 'このセッション',
+    'pane.omitted': ' (+{n} 行省略)',
+    'pane.noHere': 'here なし',
+    'pane.important': '★{n}',
+    'pane.open': '未着手 {n}',
+    'pane.mode': '表示: {mode}  (/{command} e|a)',
+    'pane.unknownView': "表示モード '{value}' は無効。/{command} e か /{command} a のいずれか",
+    'view.here': 'here',
+    // P0 のサンプルツリーの本文（構造と id は views.js の sampleTree）
+    'sample.1': "家の鍵を探す",
+    'sample.2': "いつものフックを見る。ない",
+    'sample.3': "昨日着たコートのポケット。ない",
+    'sample.4': "先週のレシートが出てきた。あとで家計簿に付ける",
+    'sample.5': "かばんの中身を全部出して調べる",
+    'sample.6': "外ポケット。ない",
+    'sample.7': "内ポケットのファスナーの中",
+    'sample.8': "そもそも昨日このかばんを使ったか？",
+    'sample.9': "昨日寄った店に電話する",
+    'sample.10': "車の中を見る（昨日は車に乗っていない）",
+    'sample.11': "合鍵で出かけて、帰ってから探す",
+    'warn.noTreeUpdate': 'yak-tree: このターンでツールを {n} 回使ったが、ツリーは未更新（tree_add / tree_here）',
+    'note.ancestorOfHere': '注意: {id} は here の祖先。here は {here} のまま',
+    'err.notFound': 'id {id} がツリーにない。tree_read で現在の ID を確認すること',
+    'err.emptyText': '本文が空',
+    'err.textNotString': '本文は文字列にすること',
+    'err.badHere': 'here は true か false にすること',
+    'err.isLink': 'ツリーのファイルがシンボリックリンクになっている（{path}）。yak-tree はリンク越しには書かない',
+    'err.singleLine': '本文は 1 行にすること',
+    'err.startsWithMark': '本文を __done__ などの印で始めない。印は tree_mark で付ける',
+    'err.containsComment': '本文に HTML コメント（<!-- ... -->）を含めない',
+    'err.badMark': 'mark は {marks} のいずれか',
+    'err.badCloseMark': 'mark は done か abandoned',
+    'err.importantHere': 'here のノードは important にできない。先に tree_here で here を移すこと',
+    'err.notHere': 'ノード {id} は here ではない',
+    'err.markedNode': "ノード {id} には印 {mark} が付いている。先に tree_mark(id, 'none') で外すか、別のノードを選ぶこと",
+    'err.badName': "ツリーの名前に使えるのは英数字、'-'、'_'、'.' だけ。先頭は英数字、'..' とパス区切りは不可（指定: {value}）",
+    'err.unsafeSegment': 'パスの一部に使えない {what}: {value}',
+    'err.subagent': 'ツリーへの書き込みはメイン会話専用。変更したい内容は最終報告に書き、メイン会話が記録する',
+    'err.missingId': 'id が必要。tree_read で現在の ID を確認すること',
+    'err.badParent': 'parent_id はノードの ID にすること。tree_read で現在の ID を確認すること',
+    'err.conflict': '書き込み中にツリーのファイルが変わり続けた（{path}）。tree_read からやり直すこと',
+    'err.tooLarge': 'ツリーのファイルが 4 MiB を超えている（{path}）。人が分割する必要がある',
+    'err.io': '{path} を読み書きできない: {detail}',
+    'tool.noFile': '（ツリーのファイルはまだない。tree_add で作られる）',
+    'tool.issues': 'issues: {n}（ID の欠落・重複、複数の here を補正した）',
+  },
+}
+
+/** "ja" だけが日本語。未設定や未知の値は英語。 */
+export function normalizeLanguage(value) {
+  return value === 'ja' ? 'ja' : 'en'
+}
+
+/** @param {string | undefined} lang @param {string} key @param {Record<string, string | number>} [params] */
+export function t(lang, key, params = {}) {
+  const table = MESSAGES[normalizeLanguage(lang)]
+  const template = table[key] ?? MESSAGES.en[key] ?? key
+  return template.replace(/\{(\w+)\}/g, (m, name) => (name in params ? String(params[name]) : m))
+}
